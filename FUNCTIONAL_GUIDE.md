@@ -30,7 +30,7 @@ D --> E[Navegar al nuevo Pedido]
   - Estado A3 (A3Status__c) → null
   - Estado Planta (PlantStatus__c) → null
   - Estado general → "Nuevo"
-  - Fecha de pedido → hoy (DateTime)
+  - Fecha de pedido → hoy (DateTime.now())
 
 ## Casos típicos de uso
 - Repetir un pedido habitual para el mismo cliente, ajustando solo cantidades/fechas.

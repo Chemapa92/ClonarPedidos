@@ -60,7 +60,7 @@ sequenceDiagram
 ```35:54:force-app/main/default/classes/OrderCloneController.cls
 Order__c clonedOrder = originalOrder.clone(false, true, false, false);
 clonedOrder.OrderNumber__c = null;
-clonedOrder.OrderDate__c = Date.today();
+clonedOrder.OrderDate__c = DateTime.now();
 clonedOrder.Status__c = 'Nuevo';
 clonedOrder.A3Status__c = null;
 clonedOrder.PlantStatus__c = null;
