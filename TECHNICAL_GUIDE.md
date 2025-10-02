@@ -37,11 +37,19 @@ sequenceDiagram
   - `diagnoseOrderLines()` para debugging
 
 ## Referencias de código
-- WebLink en `Order__c`:
+- **WebLink en `Order__c`**:
 ```2064:2073:force-app/main/default/objects/Order__c.object
         <fullName>Clonar_Pedido</fullName>
         <displayType>button</displayType>
         <url>/apex/OrderClone?recordId={!Order__c.Id}</url>
+```
+- **Layout clásico**:
+```3:3:force-app/main/default/layouts/Order__c-Formato Pedido.layout
+    <customButtons>Clonar_Pedido</customButtons>
+```
+- **Lightning Record Page**:
+```77:77:force-app/main/default/flexipages/Pedido_P_gina_de_registro.flexipage
+                            <value>CustomButton.Order__c.Clonar_Pedido</value>
 ```
 - Visualforce:
 ```1:6:force-app/main/default/pages/OrderClone.page

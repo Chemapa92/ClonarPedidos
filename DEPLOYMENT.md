@@ -3,10 +3,11 @@
 Este documento describe cómo desplegar la funcionalidad de "Clona Pedido" a Producción con Salesforce CLI (SFDX).
 
 ## Alcance del despliegue
-- Visualforce: `OrderClone.page`, `OrderClone.page-meta.xml`
-- Apex: `OrderCloneController.cls`, `OrderCloneController.cls-meta.xml`
-- Objeto: `Order__c.object` (incluye el WebLink `Clonar_Pedido`)
-- (Opcional) Flexipage: `Pedido_P_gina_de_registro.flexipage`
+- **Visualforce**: `OrderClone.page`, `OrderClone.page-meta.xml`
+- **Apex**: `OrderCloneController.cls`, `OrderCloneController.cls-meta.xml`
+- **Objeto**: `Order__c.object` (incluye el WebLink `Clonar_Pedido`)
+- **Layout**: `Order__c-Formato Pedido.layout` (incluye el botón personalizado)
+- **Flexipage**: `Pedido_P_gina_de_registro.flexipage` (Lightning Record Page)
 - (Opcional) LWC/Quick Action relacionadas si se usan
 
 ## Pre-requisitos

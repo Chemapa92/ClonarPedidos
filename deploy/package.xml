@@ -12,5 +12,13 @@
     <members>Order__c</members>
     <name>CustomObject</name>
   </types>
+  <types>
+    <members>Order__c-Formato Pedido</members>
+    <name>Layout</name>
+  </types>
+  <types>
+    <members>Pedido_P_gina_de_registro</members>
+    <name>FlexiPage</name>
+  </types>
   <version>64.0</version>
 </Package>

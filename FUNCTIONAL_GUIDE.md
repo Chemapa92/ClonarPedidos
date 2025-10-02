@@ -4,8 +4,12 @@
 Clona un pedido (`Order__c`) y todas sus líneas, creando un nuevo pedido listo para editar y enviar.
 
 ## ¿Dónde está el botón?
-- En la página de detalle de `Pedido` (Order__c), botón: "Clonar Pedido".
-- Al pulsarlo, se abre una pantalla intermedia y en segundos verás el nuevo pedido.
+- **Label**: "Clonar Pedido"
+- **Ubicación**: Página de detalle de `Pedido` (Order__c)
+- **Layout clásico**: `Order__c-Formato Pedido.layout`
+- **Lightning Record Page**: `Pedido_P_gina_de_registro.flexipage`
+- **Comportamiento**: Se abre en ventana existente sin sidebar ni header
+- **Al pulsarlo**: Se abre una pantalla intermedia y en segundos verás el nuevo pedido
 
 ## Flujo (alto nivel)
 ```mermaid
