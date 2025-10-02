@@ -25,12 +25,16 @@ sequenceDiagram
   - Verifica `isCreateable()` sobre `Order__c`.
   - `WITH SECURITY_ENFORCED` en SOQL.
   - Clona cabecera con `clone(false, true, false, false)`.
-  - Normaliza campos: `OrderNumber__c=null`, `OrderDate__c=Date.today()`, `Status__c='Nuevo'`, limpia `A3Status__c`, `PlantStatus__c`, `DeliveryNoteNumber__c`, `InvoiceNumber__c`, `FreightDate__c`.
+  - **Normaliza campos**: `OrderNumber__c=null`, `OrderDate__c=Date.today()`, `Status__c='Nuevo'`, limpia `A3Status__c`, `PlantStatus__c`, `DeliveryNoteNumber__c`, `InvoiceNumber__c`, `FreightDate__c`.
   - Inserta el pedido clonado y clona líneas.
 - `cloneOrderLines(originalOrderId, clonedOrderId)`:
   - Selecciona `OrderItem__c` por `Pedido__c`.
   - Clona cada línea y reasigna `Pedido__c=clonedOrderId`.
   - Inserta en bloque.
+- **Capacidades adicionales**:
+  - `@AuraEnabled` para uso en LWC
+  - `@InvocableMethod` para uso en Flows
+  - `diagnoseOrderLines()` para debugging
 
 ## Referencias de código
 - WebLink en `Order__c`:
@@ -50,6 +54,11 @@ Order__c clonedOrder = originalOrder.clone(false, true, false, false);
 clonedOrder.OrderNumber__c = null;
 clonedOrder.OrderDate__c = Date.today();
 clonedOrder.Status__c = 'Nuevo';
+clonedOrder.A3Status__c = null;
+clonedOrder.PlantStatus__c = null;
+clonedOrder.DeliveryNoteNumber__c = null;
+clonedOrder.InvoiceNumber__c = null;
+clonedOrder.FreightDate__c = null;
 insert clonedOrder;
 cloneOrderLines(originalOrderId, clonedOrder.Id);
 ```
@@ -63,10 +72,28 @@ for (OrderItem__c originalLine : originalLines) {
 insert clonedLines;
 ```
 
-## Variantes
-- LWC `orderCloneAction`/`orderCloneButton` llaman a `OrderCloneController.cloneOrder`.
-- Quick Action `orderCloneQuickAction` usa `OrderCloneQuickActionController` (para objeto estándar `Order`).
-- Servicio `OrderCustomCloneService`: clonado seguro con detección de campos (multidivisa).
+## Variantes y Arquitectura Completa
+
+### 1. **Implementación Principal (Order__c)**
+- **WebLink**: `Clonar_Pedido` → VF `OrderClone.page` → `OrderCloneController.cloneOrder()`
+- **LWC Button**: `orderCloneButton` → `OrderCloneController.cloneOrder()` + `diagnoseOrderLines()`
+- **LWC Action**: `orderCloneAction` → `OrderCloneController.cloneOrder()`
+
+### 2. **Implementación Alternativa (Order__c)**
+- **LWC Custom Action**: `cloneOrderCustomAction` → `OrderCustomCloneService.cloneOrder()`
+  - Clonado dinámico con detección de campos
+  - Soporte multidivisa
+  - Manejo seguro de campos opcionales
+
+### 3. **Implementación Estándar (Order)**
+- **LWC Quick Action**: `orderCloneQuickAction` → `OrderCloneQuickActionController.cloneOrderWithLines()`
+  - Para objeto estándar `Order` (no `Order__c`)
+  - Manejo de `OrderItem` estándar
+  - Soporte multidivisa
+
+### 4. **Capacidades Flow**
+- `OrderCloneController.cloneOrderInvocable()` disponible para Flows
+- No se usa actualmente en ningún Flow del proyecto
 
 ## Despliegue
 - Ver `DEPLOYMENT.md`, `deploy/package.xml`.

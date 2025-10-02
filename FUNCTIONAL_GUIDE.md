@@ -17,13 +17,16 @@ D --> E[Navegar al nuevo Pedido]
 ```
 
 ## ¿Qué copia y qué resetea?
-- Copia: cuenta, almacén, forma de pago, transportista, y todas las líneas con cantidades y precios.
-- Resetea automáticamente en el nuevo pedido:
-  - Número de pedido A3 (OrderNumber__c)
-  - Nº de factura y Nº de albarán
-  - Fecha de carga
-  - Estado: pasa a "Nuevo"
-  - Fecha de pedido: hoy
+- **Copia**: cuenta, almacén, forma de pago, transportista, plataforma, proforma, serie, y todas las líneas con cantidades y precios.
+- **Resetea automáticamente** en el nuevo pedido:
+  - Número de pedido A3 (OrderNumber__c) → null
+  - Nº de factura (InvoiceNumber__c) → null
+  - Nº de albarán (DeliveryNoteNumber__c) → null
+  - Fecha de carga (FreightDate__c) → null
+  - Estado A3 (A3Status__c) → null
+  - Estado Planta (PlantStatus__c) → null
+  - Estado general → "Nuevo"
+  - Fecha de pedido → hoy (DateTime)
 
 ## Casos típicos de uso
 - Repetir un pedido habitual para el mismo cliente, ajustando solo cantidades/fechas.
@@ -38,8 +41,11 @@ D --> E[Navegar al nuevo Pedido]
 | Líneas | 3 líneas | 3 líneas |
 
 ## Mensajes y errores
-- Si te falta permiso para crear pedidos o líneas, verás un aviso de error.
-- Si el pedido original no tiene líneas, se clona la cabecera sin errores.
+- **Permisos**: "No tiene permisos para crear pedidos" si falta Create en Order__c
+- **Pedido no encontrado**: "Error al obtener el pedido" si el ID es inválido
+- **Error de creación**: "Error al crear el pedido clonado" si falla la inserción
+- **Error de líneas**: "Error al clonar las líneas de pedido" si falla la clonación de líneas
+- **Sin líneas**: Si el pedido original no tiene líneas, se clona solo la cabecera sin errores
 
 ## Buenas prácticas
 - Revisa las fechas y el estado antes de enviarlo a planta.
